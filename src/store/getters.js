@@ -9,3 +9,7 @@ export const objects = state => {
 export const activeObjectId = state => {
   return state.meta.activeObjectId;
 }
+
+export const isAddingObject = state => {
+  return state.isAddingObject;
+}
