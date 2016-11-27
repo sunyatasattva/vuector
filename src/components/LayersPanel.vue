@@ -1,21 +1,19 @@
 <template>
   <div id="layers-panel">
     <ul>
-      <li v-for="object in objects" @click='selectObject(object)'>
-        {{object.type}}
-      </li>
+      <layer v-for="object in objects" :object="object" />
     </ul>
   </div>
 </template>
 
 <script>
+import Layer from './Layer.vue';
+
 export default {
   name: 'layers-panel',
   props: ['objects'],
-  methods: {
-    selectObject(object) {
-      this.$emit('selectObject', object);
-    }
+  components: {
+    Layer
   }
 }
 </script>

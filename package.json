@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "vue": "^2.0.1",
-    "vue-fabric": "https://github.com/sunyatasattva/vue-fabric"
+    "vue-fabric": "https://github.com/sunyatasattva/vue-fabric",
+    "vuex": "^2.0.0",
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

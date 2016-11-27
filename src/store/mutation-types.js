@@ -1,0 +1,1 @@
+export const SELECT_OBJECT = 'SELECT_OBJECT'
