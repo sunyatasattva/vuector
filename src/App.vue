@@ -1,19 +1,28 @@
 <template>
   <div id="app">
+    <header class="main-header">
+      <h1>
+        Vuector
+      </h1>
+    </header>
+    <toolbar />
+    
     <fabric-canvas 
       ref="canvas"
       v-model="canvas"
       :activeObjectId="activeObjectId"
-      :height=200
+      :height=400
+      backgroundColor="#fff"
       @mouseDown="addObject"
       @mouseUp="setAddingObject(false)"
       @mouseMove="mouseMove"
       @input="syncCanvas">
     </fabric-canvas>
     
-    <object-inspector :object='activeObject' />
-    <layers-panel :objects='canvas.objects' />
-    <toolbar />
+    <div class="utilities-panel">
+      <object-inspector :object='activeObject' />
+      <layers-panel :objects='canvas.objects' />
+    </div>
   </div>
 </template>
 
@@ -81,8 +90,6 @@ export default {
         
         obj.width = Math.max(Math.abs(diffX), 1);
         obj.height = Math.max(Math.abs(diffY), 1);
-        
-        console.log(diffX,diffY);
       }
     },
     syncCanvas(canvas) {
@@ -94,3 +101,84 @@ export default {
   }
 }
 </script>
+
+<style lang='scss'>
+  @import './styles/_variables';
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #262626;
+    font-family:      "Puritan", sans-serif;
+    margin:           0;
+  }
+  
+  input {
+    outline: none;
+  }
+  
+  .canvas-container {
+    border:           1px solid #272727;
+    display:          inline-block;
+    
+    /* @todo Temp! Until vue-fabric is fixed */
+    width:  calc(100vw - 40px - #{$utilities-panel-width}) !important;
+    height: 100vh !important;
+  }
+  
+  .main-header {
+    background:     #1b1b1b;
+    color:          #fff;
+    padding:        20px 0 20px 55px;
+    text-transform: uppercase;
+    
+    h1 {
+      margin: 0;
+    }
+  }
+  
+  .toolbar {
+    display:        inline-block;
+    margin-right:   -4px;
+    vertical-align: top;
+    width:          40px;
+  }
+  
+  .utilities-panel {
+    width: 250px;
+
+    position: fixed;
+    right:    0;
+    top:      0;
+  }
+  
+  .utility-panel {
+    background-color: #535353;
+    border-bottom:    1px solid #393939;
+    color:            #d6d6d6;
+    font-size:        0.8rem;
+  }
+  
+  .utility-panel input {
+    background-color: #373737;
+    border:           1px solid #333;
+    color:            #d6d6d6;
+    padding:          2px;
+  }
+  
+  .utility-panel h2 {
+    background-color: #393939;
+    border-bottom:    1px solid #272727;
+    border-top:       1px solid #5f5f5f;
+    font-family:      "Mada", sans-serif;
+    font-size:        1rem;
+    font-weight:      normal;
+    letter-spacing:   1px;
+    margin:           0;
+    padding:          10px;
+    padding-left:     25px;
+    text-transform:   uppercase;
+  }
+</style>

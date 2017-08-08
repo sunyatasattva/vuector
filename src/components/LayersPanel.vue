@@ -1,5 +1,6 @@
 <template>
-  <div id="layers-panel">
+  <div id="layers-panel" class="utility-panel">
+    <h2>Layers</h2>
     <ul>
       <layer v-for="object in objects" :object="object" />
     </ul>
@@ -17,3 +18,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+  #layers-panel ul {
+    padding: 0;
+  }
+</style>

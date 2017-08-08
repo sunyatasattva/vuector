@@ -24,8 +24,18 @@ export default {
 <style scoped>
   .layer {
     cursor: pointer;  
+    list-style-type: none;
+    padding: 10px 20px;
   }
-
+  
+  .layer:hover {
+    background-color: rgba(88, 102, 119, 0.5);
+  }
+  
+  .layer.active {
+    background-color: #586677;
+  }
+  
   .active {
     font-weight: bold;
   }
