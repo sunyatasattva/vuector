@@ -63,15 +63,12 @@ export default {
       this.setAddingObject(false);
     },
     addObject(opts) {
-      if(this.selectedTool.type === 'pointer')
+      const tool = this.selectedTool.type;
+      
+      if(tool.type === 'pointer')
         return;
       else {
-        let newObject = Object.assign(this.selectedTool, {
-          width: 1,
-          height: 1,
-          left: opts.e.offsetX,
-          top: opts.e.offsetY
-        });
+        let newObject = Tools[tool].initializeObject(opts.e);
         
         this.setAddingObject({ object: newObject });
 

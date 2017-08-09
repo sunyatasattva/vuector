@@ -53,6 +53,15 @@ export default {
       diffX: diffX,
       diffY: diffY
     }
+  },
+  initializeObject(e) {
+    return {
+      type: 'object',
+      width: 1,
+      height: 1,
+      left: e.offsetX,
+      top: e.offsetY
+    }
   }
 }
 </script>

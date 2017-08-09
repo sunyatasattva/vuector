@@ -13,6 +13,12 @@ export default {
   
   drawObject(obj, e) {
     Tool.drawObject(obj, e);
+  },
+  initializeObject(e) {
+    return Object.assign(
+      Tool.initializeObject(e),
+      { type: 'rect' }
+    );
   }
 }
 </script>

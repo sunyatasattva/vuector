@@ -15,7 +15,18 @@ export default {
     let diff = Tool.drawObject(obj, e);
     
     obj.rx = Math.abs(diff.diffX / 2);
-    obj.ry = Math.abs(diff.diffY / 2);
+    
+    // Creates a circle if shift is pressed
+    if(e.shiftKey)
+      obj.ry = obj.rx;
+    else
+      obj.ry = Math.abs(diff.diffY / 2);
+  },
+  initializeObject(e) {
+    return Object.assign(
+      Tool.initializeObject(e),
+      { type: 'ellipse' }
+    );
   }
 }
 </script>

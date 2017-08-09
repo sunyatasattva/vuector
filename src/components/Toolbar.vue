@@ -1,7 +1,6 @@
 <template>
   <div id='toolbar' class='toolbar'>
     <tool-pointer />
-    <tool-circle />
     <tool-rectangle />
     <tool-triangle />
     <tool-ellipse />
@@ -16,7 +15,6 @@ import * as Tools from './tools';
 export default {
   name: 'toolbar',
   components: {
-    'tool-circle': Tools.circle,
     'tool-ellipse': Tools.ellipse,
     'tool-pointer': Tools.pointer,
     'tool-rectangle': Tools.rect,
