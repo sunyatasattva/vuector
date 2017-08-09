@@ -14,7 +14,7 @@
       :height=400
       backgroundColor="#fff"
       @mouseDown="addObject"
-      @mouseUp="setAddingObject(false)"
+      @mouseUp="addObjectEnd"
       @mouseMove="mouseMove"
       @input="syncCanvas">
     </fabric-canvas>
@@ -57,7 +57,10 @@ export default {
   ),
   methods: {
     // Check that object is not 0 width/height, also reset originX/Y for consistency
-    //addObjectEnd(){},
+    addObjectEnd() {
+      this.$refs.canvas.$canvas.selection = true;
+      this.setAddingObject(false);
+    },
     addObject(opts) {
       if(this.selectedTool === 'pointer')
         return;
@@ -80,6 +83,9 @@ export default {
         let obj = this.objects[this.objects.length - 1];
         let diffX = opts.e.offsetX - obj.left;
         let diffY = opts.e.offsetY - obj.top;
+        
+        this.canvas.selection = false;
+        
         // this for circle with snapping option
         //obj.radius = Math.max(obj.radius + (opts.e.movementX + opts.e.movementY) / 2, 0);
         if(diffX < 0) obj.originX = 'right';
