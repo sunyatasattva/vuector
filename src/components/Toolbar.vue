@@ -10,18 +10,15 @@
 <script>
 import { mapGetters } from 'vuex';
 import Tool from './Tool.vue';
-import Circle from './tools/Circle.vue';
-import Pointer from './tools/Pointer.vue';
-import Rectangle from './tools/Rectangle.vue';
-import Triangle from './tools/Triangle.vue';
-
+import * as Tools from './tools';
+  
 export default {
   name: 'toolbar',
   components: {
-    'tool-circle': Circle,
-    'tool-pointer': Pointer,
-    'tool-rectangle': Rectangle,
-    'tool-triangle': Triangle
+    'tool-circle': Tools.circle,
+    'tool-pointer': Tools.pointer,
+    'tool-rectangle': Tools.rect,
+    'tool-triangle': Tools.triangle
   }
 }
 </script>

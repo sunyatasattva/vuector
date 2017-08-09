@@ -9,6 +9,10 @@ export default {
   name: 'tool-rect',
   components: {
     Tool
+  },
+  
+  drawObject(obj, e) {
+    Tool.drawObject(obj, e);
   }
 }
 </script>

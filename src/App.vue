@@ -30,6 +30,7 @@
 import { mapGetters } from 'vuex';
 import ObjectInspector from './components/ObjectInspector.vue';
 import LayersPanel from './components/LayersPanel.vue';
+import * as Tools from './components/tools';
 import Toolbar from './components/Toolbar.vue';
 
 export default {
@@ -80,21 +81,10 @@ export default {
     mouseMove(opts) {
       if(this.isAddingObject){
         let obj = this.objects[this.objects.length - 1];
-        let diffX = opts.e.offsetX - obj.left;
-        let diffY = opts.e.offsetY - obj.top;
         
         this.canvas.selection = false;
         
-        // this for circle with snapping option
-        //obj.radius = Math.max(obj.radius + (opts.e.movementX + opts.e.movementY) / 2, 0);
-        if(diffX < 0) obj.originX = 'right';
-        else obj.originX = 'left'
-        
-        if(diffY < 0) obj.originY = 'bottom';
-        else obj.originY = 'top'
-        
-        obj.width = Math.max(Math.abs(diffX), 1);
-        obj.height = Math.max(Math.abs(diffY), 1);
+        Tools[obj.type].drawObject(obj, opts.e);
       }
     },
     syncCanvas(canvas) {
