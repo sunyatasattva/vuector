@@ -4,6 +4,7 @@
     <tool-circle />
     <tool-rectangle />
     <tool-triangle />
+    <tool-ellipse />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ export default {
   name: 'toolbar',
   components: {
     'tool-circle': Tools.circle,
+    'tool-ellipse': Tools.ellipse,
     'tool-pointer': Tools.pointer,
     'tool-rectangle': Tools.rect,
     'tool-triangle': Tools.triangle
