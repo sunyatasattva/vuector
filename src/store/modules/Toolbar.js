@@ -2,7 +2,7 @@ import * as types from '../mutation-types'
 
 // initial state
 const state = {
-  selectedTool: 'pointer'
+  selectedTool: { type: 'pointer' }
 }
 
 const getters = {
@@ -10,8 +10,8 @@ const getters = {
 }
 
 const mutations = {
-  [types.SELECT_TOOL] (state, { tool }) {
-    state.selectedTool = tool;
+  [types.SELECT_TOOL] (state, tool) {
+    state.selectedTool = tool._props;
   }
 }
 

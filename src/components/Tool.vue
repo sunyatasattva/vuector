@@ -1,7 +1,7 @@
 <template>
   <button 
-    @click='selectTool({ tool: tool })'
-    :disabled='selectedTool === tool' >
+    @click='selectTool()'
+    :disabled='selectedTool.type === type' >
     <slot></slot>
   </button>
 </template>
@@ -11,13 +11,13 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'tool',
-  props: ['tool'],
+  props: ['type'],
   computed: mapGetters([
     'selectedTool',
   ]),
   methods: {
-    selectTool(tool) {
-      this.$store.commit('SELECT_TOOL', tool);
+    selectTool() {
+      this.$store.commit('SELECT_TOOL', this);
     }
   }
 }

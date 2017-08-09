@@ -62,16 +62,15 @@ export default {
       this.setAddingObject(false);
     },
     addObject(opts) {
-      if(this.selectedTool === 'pointer')
+      if(this.selectedTool.type === 'pointer')
         return;
       else {
-        let newObject = {
-          type: this.selectedTool,
+        let newObject = Object.assign(this.selectedTool, {
           width: 1,
           height: 1,
           left: opts.e.offsetX,
           top: opts.e.offsetY
-        }
+        });
         
         this.setAddingObject({ object: newObject });
 
@@ -90,7 +89,7 @@ export default {
         //obj.radius = Math.max(obj.radius + (opts.e.movementX + opts.e.movementY) / 2, 0);
         if(diffX < 0) obj.originX = 'right';
         else obj.originX = 'left'
-
+        
         if(diffY < 0) obj.originY = 'bottom';
         else obj.originY = 'top'
         

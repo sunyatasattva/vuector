@@ -1,20 +1,27 @@
 <template>
   <div id='toolbar' class='toolbar'>
-    <tool tool='pointer'>Pointer</tool>
-    <tool tool='circle'>Circle</tool>
-    <tool tool='rect'>Rect</tool>
-    <tool tool='triangle'>Triangle</tool>
+    <tool-pointer />
+    <tool-circle />
+    <tool-rectangle />
+    <tool-triangle />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import Tool from './Tool.vue';
+import Circle from './tools/Circle.vue';
+import Pointer from './tools/Pointer.vue';
+import Rectangle from './tools/Rectangle.vue';
+import Triangle from './tools/Triangle.vue';
 
 export default {
   name: 'toolbar',
   components: {
-    Tool
+    'tool-circle': Circle,
+    'tool-pointer': Pointer,
+    'tool-rectangle': Rectangle,
+    'tool-triangle': Triangle
   }
 }
 </script>
