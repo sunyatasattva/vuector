@@ -43,12 +43,13 @@ export default {
   computed: Object.assign(
     {
       $activeObject() {
+        let activeObjectId = this.activeObjectId;
+        
         if(!this.isMounted)
           return;
         
-        return this.$refs.canvas.$canvas.getObjects().find((obj) => {
-          return obj._uid === this.activeObjectId
-        });
+        return this.$refs.canvas.$canvas.getObjects()
+          .find((obj) => obj._uid === activeObjectId);
       },
       activeObject() {
         return this.canvas.objects.find((obj) => {

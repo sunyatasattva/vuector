@@ -107,7 +107,7 @@ export default {
     },
     textSelection() {
       if(!this.$object)
-        return null;
+        return { start: 0, end: 0 };
       
       return {
         start: this.$object.selectionStart,
