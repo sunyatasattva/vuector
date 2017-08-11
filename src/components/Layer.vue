@@ -1,5 +1,10 @@
 <template>
-  <li class='layer' :class='{ active: isActive }' @click='selectObject(object)'>
+  <li class='layer' :class='{ active: isActive }' @click.self='selectObject(object)'>
+    <input 
+      type="checkbox"
+      class="layer-visible"
+      v-model="object.visible"
+    />
     {{object.type}}
   </li>
 </template>
