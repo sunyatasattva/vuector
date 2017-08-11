@@ -7,12 +7,14 @@
     </header>
     <toolbar />
     
-    <fabric-canvas 
+    <fabric-canvas
+      tabindex=0
       ref="canvas"
       v-model="canvas"
       :activeObjectId="activeObjectId"
       :height=400
       backgroundColor="#fff"
+      @keyup.delete="deleteActiveObject"
       @mouseDown="addObject"
       @mouseUp="addObjectEnd"
       @mouseMove="mouseMove"
@@ -77,6 +79,9 @@ export default {
 
         this.$store.commit('ADD_OBJECT', { object: newObject });
       }
+    },
+    deleteActiveObject() {
+      this.$store.commit('DELETE_OBJECT', this.activeObject);
     },
     mouseMove(opts) {
       if(this.isAddingObject){

@@ -6,6 +6,9 @@
       v-model="object.visible"
     />
     {{object.type}}
+    <button class="delete-object" @click="deleteObject(object)">
+      Delete
+    </button>
   </li>
 </template>
 
@@ -19,6 +22,9 @@ export default {
     }
   },
   methods: {
+    deleteObject(object) {
+      this.$store.commit('DELETE_OBJECT', object);
+    },
     selectObject(object) {
       this.$store.commit('SELECT_OBJECT', object);
     }

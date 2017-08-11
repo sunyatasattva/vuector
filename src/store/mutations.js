@@ -4,6 +4,11 @@ export const ADD_OBJECT = (state, { object }) => {
   state.canvas.objects.push(object);
 }
 
+export const DELETE_OBJECT = (state, object) => {
+  state.canvas.objects = state.canvas.objects
+    .filter((o) => object._uid !== o._uid);
+}
+
 export const SET_ADDING_OBJECT = (state, { object }) => {
   state.isAddingObject = object;
 }
