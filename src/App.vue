@@ -13,6 +13,7 @@
       :activeObjectId="activeObjectId"
       :height=400
       backgroundColor="#fff"
+      @objectAdded="objectAdded"
       @mouseDown="addObject"
       @mouseUp="addObjectEnd"
       @mouseMove="mouseMove"
@@ -97,6 +98,12 @@ export default {
         
         Tools[obj.type].drawObject(obj, opts.e);
       }
+    },
+    objectAdded(opts) {
+      if(!this.isAddingObject || opts.target._uid === this.activeObjectId)
+        return;
+      else
+        this.$store.commit('SELECT_OBJECT', opts.target);
     },
     syncCanvas(canvas) {
       this.$store.commit('SYNC_CANVAS', canvas);
