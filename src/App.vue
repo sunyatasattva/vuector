@@ -20,17 +20,17 @@
     </fabric-canvas>
     
     <div class="utilities-panel">
-      <object-inspector :object='activeObject' />
+      <object-inspector :object='activeObject' :$object='$activeObject' />
       <layers-panel :objects='canvas.objects' />
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import ObjectInspector from './components/ObjectInspector.vue';
-import LayersPanel from './components/LayersPanel.vue';
 import * as Tools from './components/tools';
+import { mapGetters } from 'vuex';
+import LayersPanel from './components/LayersPanel.vue';
+import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
 
 export default {
@@ -42,8 +42,16 @@ export default {
   },
   computed: Object.assign(
     {
+      $activeObject() {
+        if(!this.isMounted)
+          return;
+        
+        return this.$refs.canvas.$canvas.getObjects().find((obj) => {
+          return obj._uid === this.activeObjectId
+        });
+      },
       activeObject() {
-        return this.objects.find((obj) => {
+        return this.canvas.objects.find((obj) => {
           return obj._uid === this.activeObjectId
         });
       }
@@ -56,6 +64,11 @@ export default {
       'selectedTool'
     ])
   ),
+  data() {
+    return {
+      isMounted: false
+    }
+  },
   methods: {
     // Check that object is not 0 width/height, also reset originX/Y for consistency
     addObjectEnd() {
@@ -65,7 +78,7 @@ export default {
     addObject(opts) {
       const tool = this.selectedTool.type;
       
-      if(tool.type === 'pointer')
+      if(tool === 'pointer')
         return;
       else {
         let newObject = Tools[tool].initializeObject(opts.e);
@@ -90,6 +103,9 @@ export default {
     setAddingObject(val) {
       this.$store.commit('SET_ADDING_OBJECT', val);
     }
+  },
+  mounted() {
+    this.isMounted = true;
   }
 }
 </script>

@@ -4,6 +4,7 @@
     <tool-rectangle />
     <tool-triangle />
     <tool-ellipse />
+    <tool-text />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ export default {
     'tool-ellipse': Tools.ellipse,
     'tool-pointer': Tools.pointer,
     'tool-rectangle': Tools.rect,
+    'tool-text': Tools.textbox,
     'tool-triangle': Tools.triangle
   }
 }
