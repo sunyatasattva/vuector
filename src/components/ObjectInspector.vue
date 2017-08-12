@@ -2,22 +2,13 @@
   <div id="object-inspector" class="utility-panel">
     <h2>Inspector</h2>
     <div v-if='object' class="object-inspector-inner">
-      <div class="input-container input-width">
-        <label for="object-width">Width</label>
-        <input type="number" name="object-width" v-model='adjustedWidth' />
-      </div>
+      <draggable-number-input v-model="adjustedWidth" label="Width"/>
       
-      <div class="input-container input-height">
-        <label for="object-height">Height</label>
-        <input type="number" name="object-height" v-model='adjustedHeight' />
-      </div>
+      <draggable-number-input v-model="adjustedHeight" label="Height"/>
       
-      <div class="input-container input-rotation">
-        <label for="object-angle">Rotation</label>
-        <input type="number" name="object-angle" v-model='object.angle' />
-      </div>
+      <draggable-number-input v-model="object.angle" label="Rotation"/>
       
-      <div class="input-container input-opacity">
+      <div class="input-container object-opacity">
         <label for="object-opacity">Opacity</label>
         <input type="range" name="object-opacity" v-model='object.opacity' min='0' max='1' step='0.01' />
         <input 
@@ -43,9 +34,14 @@
 </template>
 
 <script>
+import DraggableNumberInput from './DraggableNumber.vue';
+
 export default {
   name: 'object-inspector',
   props: ['object'],
+  components: {
+    DraggableNumberInput
+  },
   computed: {
     adjustedHeight: {
       get() {
@@ -71,7 +67,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   input,
   label { vertical-align: middle; }
   
@@ -111,8 +107,8 @@ export default {
     -webkit-appearance: none;
   }
   
-  .input-height,
-  .input-width {
+  .object-height,
+  .object-width {
     display: inline-block;
   }
   
@@ -124,14 +120,14 @@ export default {
     }
   }
   
-  .input-opacity {
+  .object-opacity {
     input[type=number] {
       background: transparent;
       border:     0;
     }
   }
   
-  .input-width {
+  .object-width {
     margin-right: 20px;
   }
   
