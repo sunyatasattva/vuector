@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     adjustValue: function(val) {
-      let newVal = !isNaN(val) ? val : this.value + val.movementY * this.step;
+      let newVal = !isNaN(val) ? val : this.value + -val.movementY * this.step;
       
       this.$emit('input', Number(newVal));
     },
