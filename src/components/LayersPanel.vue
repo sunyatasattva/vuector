@@ -1,6 +1,9 @@
 <template>
   <div id="layers-panel" class="utility-panel">
-    <h2>Layers</h2>
+    <h2>
+      <icon name="layers" />
+      Layers
+    </h2>
     <ul>
       <layer v-for="object in objects" :object="object" />
     </ul>
@@ -8,6 +11,7 @@
 </template>
 
 <script>
+import '../icons/layers';
 import Layer from './Layer.vue';
 
 export default {

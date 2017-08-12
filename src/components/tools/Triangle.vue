@@ -1,8 +1,11 @@
 <template>
-  <tool type="triangle">Triangle</tool>
+  <tool type="triangle">
+    <icon name="triangle-outline" />
+  </tool>
 </template>
 
 <script>
+import '../../icons/triangle-outline';
 import Tool from '../Tool.vue';
 
 export default {

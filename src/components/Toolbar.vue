@@ -31,11 +31,13 @@ export default {
     border:           0;
     border-bottom:    1px solid #272727;
     border-top:       1px solid #5f5f5f;
+    color:            #fff;
     cursor:           pointer;
     outline:          none;
     width:            100%;
     height:           40px;
     
+    &:active,
     &:disabled {
       background-color: #272727;
       border-bottom:    1px solid #1d1d1d;

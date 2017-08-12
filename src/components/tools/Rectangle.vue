@@ -1,8 +1,11 @@
 <template>
-  <tool type="rect">Rect</tool>
+  <tool type="rect">
+    <icon name="square-outline" />
+  </tool>
 </template>
 
 <script>
+import '../../icons/square-outline';
 import Tool from '../Tool.vue';
 
 export default {

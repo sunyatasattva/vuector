@@ -1,8 +1,11 @@
 <template>
-  <tool type="textbox">Text</tool>
+  <tool type="textbox">
+    <icon name="format-text" />
+  </tool>
 </template>
 
 <script>
+import '../../icons/format-text';
 import Tool from '../Tool.vue';
 
 export default {

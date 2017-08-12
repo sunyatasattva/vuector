@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div 
+     id="app"
+     :class="{ 'is-adding': this.selectedTool.type !== 'pointer'}"
+  >
     <header class="main-header">
       <h1>
         Vuector
@@ -144,6 +147,12 @@ export default {
     height: 100vh !important;
   }
   
+  .is-adding {
+    canvas {
+      cursor: crosshair !important;
+    }
+  }
+  
   .main-header {
     background:     #1b1b1b;
     color:          #fff;
@@ -153,6 +162,10 @@ export default {
     h1 {
       margin: 0;
     }
+  }
+  
+  .svg-icon {
+    margin-right: 10px;
   }
   
   .toolbar {
@@ -182,6 +195,7 @@ export default {
     border:           1px solid #333;
     color:            #d6d6d6;
     padding:          2px;
+    box-shadow:       0px 1px 0px #616161;
   }
   
   .utility-panel h2 {
@@ -194,7 +208,6 @@ export default {
     letter-spacing:   1px;
     margin:           0;
     padding:          10px;
-    padding-left:     25px;
     text-transform:   uppercase;
   }
 </style>

@@ -1,8 +1,11 @@
 <template>
-  <tool type="ellipse">Ellipse</tool>
+  <tool type="ellipse">
+    <icon name="circle-outline" />
+  </tool>
 </template>
 
 <script>
+import '../../icons/circle-outline';
 import Tool from '../Tool.vue';
 
 export default {

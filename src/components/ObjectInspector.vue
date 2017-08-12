@@ -1,6 +1,9 @@
 <template>
   <div id="object-inspector" class="utility-panel">
-    <h2>Inspector</h2>
+    <h2>
+      <icon name="crosshairs-gps" />
+      Inspector
+    </h2>
     <div v-if='object' class="object-inspector-inner">
       <section class="inspector-transform">
         <h3 class="section-title">Transform</h3>
@@ -42,6 +45,75 @@
       <section class="inspector-text" v-if='object.type === "textbox"'>
         <h3 class="section-title">Text</h3>
         
+        <div class="buttons-group text-format">
+          <input 
+            type="checkbox" 
+            name="font-weight" 
+            id="font-weight" 
+            v-model="object.fontWeight"
+            :true-value="'bold'"
+            :false-value="'normal'" />
+          <label for="font-weight" @click="toggleStyle($event, 'fontWeight', 'bold')">
+            <icon name="format-bold" />
+          </label>
+          <input 
+            type="checkbox" 
+            name="font-italic" 
+            id="font-italic" 
+            v-model="object.fontStyle"
+            :true-value="'italic'"
+            :false-value="''" />
+          <label for="font-italic">
+            <icon name="format-italic" />
+          </label>
+          <input 
+            type="checkbox" 
+            name="font-underline" 
+            id="font-underline" 
+            v-model="object.textDecoration"
+            :true-value="'underline'"
+            :false-value="''" />
+          <label for="font-underline">
+            <icon name="format-underline" />
+          </label>
+          <!-- @todo implement this
+          <button
+          class="button-toggle"
+          :class="{ 
+            'is-active': isSelectionStyled('fontWeight', 'bold')
+          }"
+          @click="toggleStyle('fontWeight', 'bold')">
+            
+          </button>
+          -->
+        </div>
+        
+        <div class="buttons-group text-alignment">
+          <input type="radio" name="text-alignment" id="text-alignment-left" value="left" v-model="object.textAlign">
+          <label for="text-alignment-left">
+            <icon name="format-align-left" />
+          </label>
+          <input type="radio" name="text-alignment" id="text-alignment-center" value="center" v-model="object.textAlign">
+          <label for="text-alignment-center">
+            <icon name="format-align-center" />
+          </label>
+          <input type="radio" name="text-alignment"  id="text-alignment-right" value="right" v-model="object.textAlign">
+          <label for="text-alignment-right">
+            <icon name="format-align-right" />
+          </label>
+        </div>
+        
+        <div class="input-container input-background-color">
+          <label for="object-background-color">
+            <icon name="format-color-fill" />
+          </label>
+          <input 
+            type="color"
+            id="object-background-color"
+            :style="{ opacity: object.backgroundColor ? 1 : 0 }"
+            v-model="object.backgroundColor" />
+        </div>
+        
         <div class="input-container input-font-family">
           <label for="object-font-family">Font</label>
           <input type="text" name="object-font-family" v-model='object.fontFamily' />
@@ -56,19 +128,6 @@
           <label for="object-line-height">Spacing</label>
           <input type="number" name="object-line-height" v-model='object.lineHeight' />
         </div>
-        
-        <button
-          class="button-toggle"
-          :class="{ 
-            'is-active': isSelectionStyled('fontWeight', 'bold')
-          }"
-          @click="toggleStyle('fontWeight', 'bold')">Bold</button>
-        
-        <div class="text-alignment">
-          <input type="radio" name="text-alignment" value="left" v-model="object.textAlign">
-          <input type="radio" name="text-alignment" value="center" v-model="object.textAlign">
-          <input type="radio" name="text-alignment" value="right" v-model="object.textAlign">
-        </div>
       </section>
     </div>
     <div v-else class="object-inspector-inner no-object">
@@ -78,6 +137,15 @@
 </template>
 
 <script>
+import '../icons/crosshairs-gps';
+import '../icons/format-align-center';
+import '../icons/format-align-left';
+import '../icons/format-align-right';
+import '../icons/format-bold';
+import '../icons/format-color-fill';
+import '../icons/format-italic';
+import '../icons/format-underline';
+
 export default {
   name: 'object-inspector',
   props: [
@@ -105,7 +173,14 @@ export default {
         this.object.width += diff / this.object.scaleX;
       }
     },
+    selectionStyle() {
+      let selection = this.textSelection;
+      
+      return this.$object.getSelectionStyles();
+    },
     textSelection() {
+      let start = this.$object.selectionStart;
+
       if(!this.$object)
         return { start: 0, end: 0 };
       
@@ -124,10 +199,12 @@ export default {
       else
         return this.$object[key] === val;
     },
-    toggleStyle(key, val) {
+    toggleStyle(e, key, val) {
       let styles;
       
       if(this.$object.selectionStart !== this.$object.selectionEnd) {
+        e.preventDefault();
+        
         styles = this.$object.getSelectionStyles()[key];
         
         if(styles)
@@ -135,16 +212,16 @@ export default {
         else
           this.$object.setSelectionStyles({ [key]: val });
       }
-      else {
-        styles = this.$object[key];
-        
-        // @todo when adding support for fabricjs 2.0 on vue-fabric
-        // add removeStyle to flatten the characters
-        if(styles) 
-          this.$object.set(key, '');
-        else
-          this.$object.set(key, val);
-      }
+//      else {
+//        styles = this.$object[key];
+//        
+//        // @todo when adding support for fabricjs 2.0 on vue-fabric
+//        // add removeStyle to flatten the characters
+//        if(styles) 
+//          this.$object.set(key, '');
+//        else
+//          this.$object.set(key, val);
+//      }
     }
   }
 }
@@ -159,14 +236,22 @@ export default {
     width:   60px;
   }
 
+  input[type=color] {
+    cursor: pointer;
+    
+    &::-webkit-color-swatch {
+      border: 0;
+    }
+  }
+  
   input[type=number] {
     width: 45px;
   }
   
   input[type=range] {
     background:   #373737;
-    border: 1px solid #333333;
-    cursor: pointer;
+    border:       1px solid #333333;
+    cursor:       pointer;
     margin-right: 10px;
     padding:      0;
     width:        113px;
@@ -190,6 +275,7 @@ export default {
     -webkit-appearance: none;
   }
   
+  .input-background-color,
   .input-font-size,
   .input-height,
   .input-line-height,
@@ -206,12 +292,39 @@ export default {
   .input-container {
     padding: 10px;
     
+    &.input-background-color {
+      margin-left:   2px;
+      padding-right: 0;
+
+      input,
+      label {
+        width: 25px;
+      }
+
+      input {
+        padding: 0;
+        height: 28px;
+
+        &::-webkit-color-swatch-wrapper {
+          padding: 6px 3px;
+        }
+      }
+      
+      label {
+        cursor: pointer;
+      }
+    }
+    
     label {
       font-size: 0.8rem;
     }
   }
   
-  .input-opacity {
+  .input-font-family input {
+    width: 125px;
+  }
+  
+  .object-opacity {
     input[type=number] {
       background: transparent;
       border:     0;
@@ -236,5 +349,33 @@ export default {
     text-transform: uppercase;
     font-weight: 200;
     border-top: 1px solid #5f5f5f;
+  }
+  
+  .buttons-group {
+    display: inline-block;
+    padding: 10px;
+    
+    &.text-alignment {
+      padding: 0;
+    }
+    
+    input {
+      display: none;
+      
+      &:checked + label,
+      + label:active {
+        background-color: #373737;
+        border:           1px solid #333;
+        box-shadow:       0px 1px 0px #616161;
+      }
+    }
+    
+    label {
+      border:     1px solid transparent;
+      box-sizing: content-box;
+      cursor:     pointer;
+      padding:    4px;
+      width:      16px;
+    }
   }
 </style>

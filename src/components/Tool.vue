@@ -67,4 +67,11 @@ export default {
 </script>
 
 <style scoped>
+  button {
+    text-align: center;
+  }
+  
+  .svg-icon {
+    margin: 0;
+  }
 </style>
