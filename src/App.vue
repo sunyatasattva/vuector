@@ -6,9 +6,9 @@
     <header class="main-header">
       <h1>
         Vuector
-        <div class="save-button">
-          <button-with-options>
-            <icon name="download" slot="button" />
+        <div class="import-export-buttons">
+          <button-with-options title="Export as…">
+            <icon name="download" slot="button"/>
 
             <ul slot="options">
               <li @click="saveCanvas('png')">
@@ -22,6 +22,7 @@
               </li>
             </ul>
           </button-with-options>
+          <import-button title="Import…" />
         </div>
       </h1>
     </header>
@@ -57,6 +58,7 @@ import './icons/vector-curve';
 import * as Tools from './components/tools';
 import { mapGetters } from 'vuex';
 import ButtonWithOptions from './components/ButtonWithOptions.vue';
+import ImportButton from './components/ImportButton.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
@@ -65,6 +67,7 @@ export default {
   name: 'app',
   components: {
     ButtonWithOptions,
+    ImportButton,
     LayersPanel,
     ObjectInspector,
     Toolbar
@@ -138,7 +141,7 @@ export default {
     },
     saveCanvas(type) {
       let file;
-      let link = document.createElement("a");
+      let link = document.createElement('a');
       
       switch(type) {
           case 'json':
@@ -227,9 +230,9 @@ export default {
     }
   }
   
-  .save-button {
+  .import-export-buttons {
     position: absolute;
-    right:    35px;
+    right:    10px;
     top:      0;
     
     .button-options {

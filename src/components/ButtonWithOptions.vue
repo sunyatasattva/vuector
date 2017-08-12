@@ -29,6 +29,7 @@ export default {
   .button-with-options-container {
     display:  inline-block;
     position: relative;
+    width:    25px;
   }
   
   button,
