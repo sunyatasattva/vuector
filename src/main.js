@@ -5,8 +5,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import VueFabric from '../node_modules/vue-fabric/src/main.js'
+import VueSVGIcon from 'vue-svgicon'
   
 Vue.use(VueFabric);
+Vue.use(VueSVGIcon, {
+  tagName: 'icon'
+});
 
 new Vue({ // eslint-disable-line no-new
   el: '#app',

@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div 
+     id="app"
+     :class="{ 'is-adding': this.selectedTool.type !== 'pointer'}"
+  >
     <header class="main-header">
       <h1>
         Vuector
@@ -15,6 +18,7 @@
       :height=400
       backgroundColor="#fff"
       @keyup.delete="deleteActiveObject"
+      @objectAdded="objectAdded"
       @mouseDown="addObject"
       @mouseUp="addObjectEnd"
       @mouseMove="mouseMove"
@@ -22,16 +26,17 @@
     </fabric-canvas>
     
     <div class="utilities-panel">
-      <object-inspector :object='activeObject' />
+      <object-inspector :object='activeObject' :$object='$activeObject' />
       <layers-panel :objects='canvas.objects' />
     </div>
   </div>
 </template>
 
 <script>
+import * as Tools from './components/tools';
 import { mapGetters } from 'vuex';
-import ObjectInspector from './components/ObjectInspector.vue';
 import LayersPanel from './components/LayersPanel.vue';
+import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
 
 export default {
@@ -43,8 +48,17 @@ export default {
   },
   computed: Object.assign(
     {
+      $activeObject() {
+        let activeObjectId = this.activeObjectId;
+        
+        if(!this.isMounted)
+          return;
+        
+        return this.$refs.canvas.$canvas.getObjects()
+          .find((obj) => obj._uid === activeObjectId);
+      },
       activeObject() {
-        return this.objects.find((obj) => {
+        return this.canvas.objects.find((obj) => {
           return obj._uid === this.activeObjectId
         });
       }
@@ -57,6 +71,11 @@ export default {
       'selectedTool'
     ])
   ),
+  data() {
+    return {
+      isMounted: false
+    }
+  },
   methods: {
     // Check that object is not 0 width/height, also reset originX/Y for consistency
     addObjectEnd() {
@@ -64,16 +83,12 @@ export default {
       this.setAddingObject(false);
     },
     addObject(opts) {
-      if(this.selectedTool === 'pointer')
+      const tool = this.selectedTool.type;
+      
+      if(tool === 'pointer')
         return;
       else {
-        let newObject = {
-          type: this.selectedTool,
-          width: 1,
-          height: 1,
-          left: opts.e.offsetX,
-          top: opts.e.offsetY
-        }
+        let newObject = Tools[tool].initializeObject(opts.e);
         
         this.setAddingObject({ object: newObject });
 
@@ -86,22 +101,17 @@ export default {
     mouseMove(opts) {
       if(this.isAddingObject){
         let obj = this.objects[this.objects.length - 1];
-        let diffX = opts.e.offsetX - obj.left;
-        let diffY = opts.e.offsetY - obj.top;
         
         this.canvas.selection = false;
         
-        // this for circle with snapping option
-        //obj.radius = Math.max(obj.radius + (opts.e.movementX + opts.e.movementY) / 2, 0);
-        if(diffX < 0) obj.originX = 'right';
-        else obj.originX = 'left'
-
-        if(diffY < 0) obj.originY = 'bottom';
-        else obj.originY = 'top'
-        
-        obj.width = Math.max(Math.abs(diffX), 1);
-        obj.height = Math.max(Math.abs(diffY), 1);
+        Tools[obj.type].drawObject(obj, opts.e);
       }
+    },
+    objectAdded(opts) {
+      if(!this.isAddingObject || opts.target._uid === this.activeObjectId)
+        return;
+      else
+        this.$store.commit('SELECT_OBJECT', opts.target);
     },
     syncCanvas(canvas) {
       this.$store.commit('SYNC_CANVAS', canvas);
@@ -109,6 +119,9 @@ export default {
     setAddingObject(val) {
       this.$store.commit('SET_ADDING_OBJECT', val);
     }
+  },
+  mounted() {
+    this.isMounted = true;
   }
 }
 </script>
@@ -139,6 +152,12 @@ export default {
     height: 100vh !important;
   }
   
+  .is-adding {
+    canvas {
+      cursor: crosshair !important;
+    }
+  }
+  
   .main-header {
     background:     #1b1b1b;
     color:          #fff;
@@ -148,6 +167,10 @@ export default {
     h1 {
       margin: 0;
     }
+  }
+  
+  .svg-icon {
+    margin-right: 10px;
   }
   
   .toolbar {
@@ -177,6 +200,7 @@ export default {
     border:           1px solid #333;
     color:            #d6d6d6;
     padding:          2px;
+    box-shadow:       0px 1px 0px #616161;
   }
   
   .utility-panel h2 {
@@ -189,7 +213,6 @@ export default {
     letter-spacing:   1px;
     margin:           0;
     padding:          10px;
-    padding-left:     25px;
     text-transform:   uppercase;
   }
 </style>
