@@ -6,6 +6,23 @@
     <header class="main-header">
       <h1>
         Vuector
+        <div class="save-button">
+          <button-with-options>
+            <icon name="download" slot="button" />
+
+            <ul slot="options">
+              <li @click="saveCanvas('png')">
+                <icon name="file-image" /> PNG
+              </li>
+              <li @click="saveCanvas('svg')">
+                <icon name="vector-curve" /> SVG
+              </li>
+              <li @click="saveCanvas('json')">
+                <icon name="code-braces" /> JSON
+              </li>
+            </ul>
+          </button-with-options>
+        </div>
       </h1>
     </header>
     <toolbar />
@@ -33,8 +50,13 @@
 </template>
 
 <script>
+import './icons/code-braces';
+import './icons/download';
+import './icons/file-image';
+import './icons/vector-curve';
 import * as Tools from './components/tools';
 import { mapGetters } from 'vuex';
+import ButtonWithOptions from './components/ButtonWithOptions.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
@@ -42,6 +64,7 @@ import Toolbar from './components/Toolbar.vue';
 export default {
   name: 'app',
   components: {
+    ButtonWithOptions,
     LayersPanel,
     ObjectInspector,
     Toolbar
@@ -113,6 +136,34 @@ export default {
       else
         this.$store.commit('SELECT_OBJECT', opts.target);
     },
+    saveCanvas(type) {
+      let file;
+      let link = document.createElement("a");
+      
+      switch(type) {
+          case 'json':
+            file = this.$refs.canvas.$canvas.toJSON();
+            file = JSON.stringify(file);
+            file = `data:text/json;charset=utf-8,${file}`;
+            break;
+          case 'png':
+            file = this.$refs.canvas.$canvas.toDataURL('png');
+            break;
+          case 'svg':
+            file = this.$refs.canvas.$canvas.toSVG();
+            file = `data:image/svg+xml;utf8,${file}`;
+            break;
+      }
+      
+      link.download = `vuector.${type}`;
+      link.href = file;
+      
+      document.body.appendChild(link);
+      
+      link.click();
+      
+      document.body.removeChild(link);
+    },
     syncCanvas(canvas) {
       this.$store.commit('SYNC_CANVAS', canvas);
     },
@@ -127,6 +178,7 @@ export default {
 </script>
 
 <style lang='scss'>
+  @import './styles/_mixins';
   @import './styles/_variables';
   
   * {
@@ -167,9 +219,44 @@ export default {
     color:          #fff;
     padding:        20px 0 20px 55px;
     text-transform: uppercase;
+    position:       relative;
+    width:          calc(100% - 250px);
     
     h1 {
       margin: 0;
+    }
+  }
+  
+  .save-button {
+    position: absolute;
+    right:    35px;
+    top:      0;
+    
+    .button-options {
+      li {
+        background-color: #222;
+        cursor:           pointer;
+        padding:          10px;
+        width:            75px;
+        
+        &:hover {
+          background-color: #586677;
+          
+          &:active {
+            background-color: #404c5a;
+          }
+        }
+      }
+      
+      ul {
+        border:          1px solid #292929;
+        box-shadow:      0px 1px 4px #0c0c0c;
+        font-size:       0.8rem;
+        font-weight:     normal;
+        list-style-type: none;
+        margin:          0;
+        padding:         0;
+      }
     }
   }
   

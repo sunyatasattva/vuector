@@ -42,6 +42,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  @import '../styles/_mixins';
+  
   input[type="checkbox"] {
     display: none;
   }
@@ -59,37 +61,10 @@ export default {
   }
   
   .delete-object {
-    background-color: #535353;
-    border:           0;
-    border-top: 1px solid #616161;
-    box-shadow:       0px 0px 0px 1px #333,
-                      0px 0px 4px #333;
-    color:            #e6e6e6;
-    cursor:           pointer;
+    @extend %raised-button;
+    
     float:            right;
     margin-top: -2px;
-    border-radius: 2px;
-    padding: 2px 3px;
-    outline: none;
-    
-    &:active {
-      border-top: 1px solid #424242;
-      color:      #d6d6d6;
-      box-shadow: 0px 0px 0px 1px #333,
-                  inset 0px 0px 4px #333;
-      
-      &:hover {
-        color: #d6d6d6;
-      }
-    }
-    
-    &:hover {
-      color:       #fff;
-    }
-    
-    .svg-icon {
-      margin: 0;
-    }
   }
   
   .layer {
