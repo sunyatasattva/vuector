@@ -33,10 +33,14 @@ export default {
 </script>
 
 <style scoped>
+  .active {
+    font-weight: bold;
+  }
+  
   .layer {
     cursor: pointer;  
     list-style-type: none;
-    padding: 10px 20px;
+    padding: 10px;
   }
   
   .layer:hover {
@@ -47,7 +51,7 @@ export default {
     background-color: #586677;
   }
   
-  .active {
-    font-weight: bold;
+  .layer-visible {
+    margin-right: 10px;
   }
 </style>

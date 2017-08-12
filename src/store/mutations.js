@@ -25,3 +25,7 @@ export const SYNC_CANVAS = (state, canvas) => {
 export const SET_OBJECT_PROP = (state, prop, value) => {
   
 }
+
+export const UPDATE_OBJECTS = (state, objects) => {
+  state.canvas.objects = objects;
+}
