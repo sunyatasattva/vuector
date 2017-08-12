@@ -143,6 +143,10 @@ export default {
     outline: none;
   }
   
+  label {
+    cursor: pointer;
+  }
+  
   .canvas-container {
     border:           1px solid #272727;
     display:          inline-block;

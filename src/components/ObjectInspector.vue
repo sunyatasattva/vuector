@@ -110,15 +110,10 @@
           <input type="text" name="object-font-family" v-model='object.fontFamily' />
         </div>
         
-        <div class="input-container input-font-size">
-          <label for="object-font-size">Size</label>
-          <input type="number" name="object-font-size" v-model='object.fontSize' />
-        </div>
+        <draggable-number-input v-model="object.fontSize" label="Size"/>
         
-        <div class="input-container input-line-height">
-          <label for="object-line-height">Spacing</label>
-          <input type="number" name="object-line-height" v-model='object.lineHeight' />
-        </div>
+        <draggable-number-input v-model="object.lineHeight" label="Spacing" :step="0.25" />
+        
       </section>
     </div>
     <div v-else class="object-inspector-inner no-object">
@@ -271,9 +266,9 @@ export default {
   }
   
   .input-background-color,
-  .input-font-size,
+  .object-size,
   .object-height,
-  .input-line-height,
+  .object-spacing,
   .object-width {
     display: inline-block;
   }
@@ -324,10 +319,6 @@ export default {
       background: transparent;
       border:     0;
     }
-  }
-  
-  .object-width {
-    margin-right: 20px;
   }
   
   .object-inspector-inner {
