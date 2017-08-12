@@ -4,6 +4,7 @@
     <input
       type="number"
       :name="inputName"
+      :step="step"
       :value="value"
       @input="adjustValue($event.target.value)">
   </div>
@@ -13,10 +14,20 @@
 <script>
 export default {
   name: 'draggable-number-input',
-  props: [
-    'label',
-    'value'
-  ],
+  props: {
+    label: {
+      type: String,
+      required: true
+    },
+    value: {
+      type: Number,
+      required: true
+    },
+    step: {
+      type: Number,
+      default: 1
+    }
+  },
   computed: {
     boundAdjust() {
       return this.adjustValue.bind(this);
@@ -35,7 +46,7 @@ export default {
   },
   methods: {
     adjustValue: function(val) {
-      let newVal = !isNaN(val) ? val : this.value + val.movementY;
+      let newVal = !isNaN(val) ? val : this.value + val.movementY * this.step;
       
       this.$emit('input', Number(newVal));
     },
