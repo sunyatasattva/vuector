@@ -26,6 +26,7 @@
         </div>
       </h1>
     </header>
+    <tool-options v-if="selectedTool.options" :tool="selectedTool" />
     <toolbar />
     
     <fabric-canvas
@@ -62,6 +63,7 @@ import ImportButton from './components/ImportButton.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
+import ToolOptions from './components/ToolOptions.vue';
 import Vue from 'vue';
 
 export default {
@@ -71,7 +73,8 @@ export default {
     ImportButton,
     LayersPanel,
     ObjectInspector,
-    Toolbar
+    Toolbar,
+    ToolOptions
   },
   computed: Object.assign(
     {
@@ -142,7 +145,7 @@ export default {
       this.$store.commit('DELETE_OBJECT', this.activeObject);
     },
     mouseMove(opts) {
-      if(this.isAddingObject){
+      if(this.isAddingObject) {
         let obj = this.objects[this.objects.length - 1];
         
         this.canvas.selection = false;
@@ -186,6 +189,8 @@ export default {
     },
     setDrawingBrushProps(props) {
       let drawingBrush = this.$refs.canvas.$canvas.freeDrawingBrush;
+      
+      props = props || this.selectedTool.options;
       
       this.$refs.canvas.$canvas.freeDrawingBrush = Object.assign(
         drawingBrush,

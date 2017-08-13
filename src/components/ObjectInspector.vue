@@ -28,7 +28,7 @@
           />
         </div>
 
-        <div class="input-container input-color">
+        <div class="input-container input-color" v-if="object.fill">
           <label for="object-fill">Color</label>
           <input type="color" name="object-fill" v-model='object.fill' />
         </div>
@@ -339,6 +339,10 @@ export default {
     text-transform: uppercase;
     font-weight: 200;
     border-top: 1px solid #5f5f5f;
+  }
+  
+  .utilities-panel {
+    box-shadow: 0 0 4px #151515;
   }
   
   .buttons-group {

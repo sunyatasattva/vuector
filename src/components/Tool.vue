@@ -19,6 +19,7 @@ export default {
     {
       options() {
         return Object.assign({
+          angle: 0,
           fill: '#ffffff',
           opacity: 1
         }, this.opts)

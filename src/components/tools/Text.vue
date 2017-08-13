@@ -1,5 +1,5 @@
 <template>
-  <tool type="textbox">
+  <tool type="textbox" :opts="$data">
     <icon name="format-text" />
   </tool>
 </template>
@@ -13,20 +13,24 @@ export default {
   components: {
     Tool
   },
+  data() {
+    return {
+      fontFamily: 'Helvetica, sans-serif',
+      fontSize: 16,
+      lineHeight: 1.25,
+    }
+  },
   
   drawObject(obj, e) {
     Tool.drawObject(obj, e);
   },
-  initializeObject(e) {
+  initializeObject(e, opts) {
     return Object.assign(
-      Tool.initializeObject(e),
+      Tool.initializeObject(e, opts),
       { 
         type: 'textbox',
         
-        fontFamily: 'Helvetica, sans-serif',
-        fontSize: 16,
-        fontWeigth: 'normal',
-        lineHeight: 1.25,
+        fontWeight: 'normal',
         text: 'Some text...'
       }
     );

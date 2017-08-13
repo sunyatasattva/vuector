@@ -15,6 +15,7 @@ export default {
   },
   data() {
     return {
+      angle: NaN,
       fill: null,
       opacity: null
     }

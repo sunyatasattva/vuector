@@ -35,7 +35,7 @@ export default {
     border:           0;
     border-bottom:    1px solid #272727;
     border-top:       1px solid #5f5f5f;
-    color:            #fff;
+    color:            #d6d6d6;
     cursor:           pointer;
     outline:          none;
     width:            100%;
@@ -46,6 +46,14 @@ export default {
       background-color: #272727;
       border-bottom:    1px solid #1d1d1d;
       border-top:       1px solid #1d1d1d;
+      
+      &:hover {
+        color: #d6d6d6;
+      }
+    }
+    
+    &:hover {
+      color: #fff;
     }
   }
 </style>
