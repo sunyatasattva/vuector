@@ -11,10 +11,23 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'tool',
-  props: ['type'],
-  computed: mapGetters([
-    'selectedTool',
-  ]),
+  props: [
+    'opts',
+    'type'
+  ],
+  computed: Object.assign(
+    {
+      options() {
+        return Object.assign({
+          fill: '#ffffff',
+          opacity: 1
+        }, this.opts)
+      }
+    },
+    mapGetters([
+      'selectedTool',
+    ])
+  ),
   methods: {
     selectTool() {
       this.$store.commit('SELECT_TOOL', this);
@@ -54,14 +67,14 @@ export default {
       diffY: diffY
     }
   },
-  initializeObject(e) {
-    return {
+  initializeObject(e, opts) {
+    return Object.assign({
       type: 'object',
       width: 1,
       height: 1,
       left: e.offsetX,
       top: e.offsetY
-    }
+    }, opts);
   }
 }
 </script>

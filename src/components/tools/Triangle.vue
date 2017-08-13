@@ -1,5 +1,5 @@
 <template>
-  <tool type="triangle">
+  <tool type="triangle" :opts="$data">
     <icon name="triangle-outline" />
   </tool>
 </template>
@@ -13,13 +13,16 @@ export default {
   components: {
     Tool
   },
+  data() {
+    return {}
+  },
   
   drawObject(obj, e) {
     Tool.drawObject(obj, e);
   },
-  initializeObject(e) {
+  initializeObject(e, opts) {
     return Object.assign(
-      Tool.initializeObject(e),
+      Tool.initializeObject(e, opts),
       { type: 'triangle' }
     );
   }

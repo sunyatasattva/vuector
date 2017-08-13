@@ -114,7 +114,10 @@ export default {
       if(tool === 'pointer')
         return;
       else {
-        let newObject = Tools[tool].initializeObject(opts.e);
+        let newObject = Tools[tool].initializeObject(
+          opts.e,
+          this.selectedTool.options
+        );
         
         this.setAddingObject({ object: newObject });
 

@@ -1,5 +1,5 @@
 <template>
-  <tool type="ellipse">
+  <tool type="ellipse" :opts="$data">
     <icon name="circle-outline" />
   </tool>
 </template>
@@ -13,6 +13,9 @@ export default {
   components: {
     Tool
   },
+  data() {
+    return {}
+  },
   
   drawObject(obj, e) {
     let diff = Tool.drawObject(obj, e);
@@ -25,9 +28,9 @@ export default {
     else
       obj.ry = Math.abs(diff.diffY / 2);
   },
-  initializeObject(e) {
+  initializeObject(e, opts) {
     return Object.assign(
-      Tool.initializeObject(e),
+      Tool.initializeObject(e, opts),
       { type: 'ellipse' }
     );
   }

@@ -1,5 +1,5 @@
 <template>
-  <tool type="pointer">
+  <tool type="pointer" :opts="$data">
     <icon name="cursor-default-outline" />
   </tool>
 </template>
@@ -12,6 +12,12 @@ export default {
   name: 'tool-pointer',
   components: {
     Tool
+  },
+  data() {
+    return {
+      fill: null,
+      opacity: null
+    }
   }
 }
 </script>
