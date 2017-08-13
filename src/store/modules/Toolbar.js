@@ -2,28 +2,35 @@ import * as types from '../mutation-types'
 
 // initial state
 const state = {
-  selectedTool: { type: 'pointer' }
+  selectedTool: {
+    options: {
+      fill: null,
+      opacity: null
+    },
+    propsData: {
+      type: 'pointer'
+    }
+  }
 }
 
 const getters = {
   selectedTool: state => {
     let tool = state.selectedTool;
     
-    if(!tool.$options)
-      return state.selectedTool;
-    
     return Object.assign(
       {
         options: tool.options
       },
-      tool.$options.propsData
+      tool.propsData
     );
   }
 }
 
 const mutations = {
-  [types.SELECT_TOOL] (state, tool) {
-    state.selectedTool = tool;
+  [types.SELECT_TOOL] (state, { $options, options }) {
+    let propsData = $options.propsData;
+    
+    state.selectedTool = { options, propsData };
   }
 }
 
