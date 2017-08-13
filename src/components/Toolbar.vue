@@ -5,6 +5,7 @@
     <tool-triangle />
     <tool-ellipse />
     <tool-text />
+    <tool-image />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ export default {
   name: 'toolbar',
   components: {
     'tool-ellipse': Tools.ellipse,
+    'tool-image': Tools.image,
     'tool-pointer': Tools.pointer,
     'tool-rectangle': Tools.rect,
     'tool-text': Tools.textbox,
