@@ -14,7 +14,7 @@
       <div class="input-container input-color" v-if="tool.options.color">
         <input type="color" id="options-color" name="options-color" v-model='tool.options.color' @change="updateBrushProps" />
         
-        <draggable-number-input v-model="tool.options.width" label="Brush Size" @change="updateBrushProps" />
+        <draggable-number-input :min="0" :max="100" v-model="tool.options.width" label="Brush Size" @change="updateBrushProps" />
       </div>
     </div>
     <div v-else>
@@ -23,15 +23,18 @@
       </div>
 
       <draggable-number-input
-        min="0"
-        max="100"
+        :min="0"
+        :max="100"
         v-if="tool.options.opacity"
         label="Opacity"
         :value="Math.ceil(tool.options.opacity * 100)"
-        @input="tool.options.opacity = $event.target.value / 100"
+        @input="tool.options.opacity = $event / 100"
       />
 
-      <draggable-number-input v-if="!isNaN(tool.options.angle)" v-model="tool.options.angle" label="Rotation" />
+      <draggable-number-input 
+        v-if="!isNaN(tool.options.angle)" 
+        v-model="tool.options.angle" 
+        label="Rotation" />
 
       <div class="input-container input-font-family" v-if="tool.options.fontFamily">
         <label for="object-font-family">Font</label>

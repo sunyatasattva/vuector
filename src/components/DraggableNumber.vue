@@ -3,6 +3,8 @@
     <label :for="inputName">{{ label }}</label>
     <input
       type="number"
+      :max="max"
+      :min="min"
       :name="inputName"
       :step="step"
       :value="value"
@@ -18,6 +20,12 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    max: {
+      type: Number
+    },
+    min: {
+      type: Number
     },
     value: {
       type: Number,
@@ -46,9 +54,16 @@ export default {
   },
   methods: {
     adjustValue(val) {
-      let newVal = !isNaN(val) ? val : this.value + -val.movementY * this.step;
+      let newVal = !isNaN(val) ? Number(val) :
+        Number(this.value + -val.movementY * this.step);
       
-      this.$emit('input', Number(newVal));
+      if(this.min)
+        newVal = Math.max(newVal, this.min);
+      if(this.max)
+        newVal = Math.min(newVal, this.max);
+      
+      this.$emit('input', newVal);
+      this.$emit('change', newVal);
     },
     change(e) {
       this.$emit('change', e);
