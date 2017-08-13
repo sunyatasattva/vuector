@@ -302,8 +302,9 @@ export default {
   .toolbar {
     display:        inline-block;
     margin-right:   -4px;
+    margin-top:     1px;
     vertical-align: top;
-    width:          40px;
+    width:          $toolbar-panel-width;
   }
   
   .utilities-panel {
@@ -312,6 +313,7 @@ export default {
     position: fixed;
     right:    0;
     top:      0;
+    z-index:  1;
   }
   
   .utility-panel {

@@ -1,5 +1,5 @@
 <template>
-  <div class="tool-options utility-panel">
+  <div class="tool-options utility-panel" v-if="tool.type !== 'pointer'">
     <div class="file-details" v-if="tool.type === 'image'">
       <span v-if="tool.options.fileName">
         <strong>Filename: </strong>
@@ -13,9 +13,9 @@
     <div class="brush-details" v-else-if="tool.type === 'brush'">
       <div class="input-container input-color" v-if="tool.options.color">
         <input type="color" id="options-color" name="options-color" v-model='tool.options.color' @change="updateBrushProps" />
-        
-        <draggable-number-input :min="0" :max="100" v-model="tool.options.width" label="Brush Size" @change="updateBrushProps" />
       </div>
+      
+      <draggable-number-input :min="0" :max="100" v-model="tool.options.width" label="Brush Size" @change="updateBrushProps" />
     </div>
     <div v-else>
       <div class="input-container input-color" v-if="tool.options.fill">
@@ -74,8 +74,12 @@ export default {
   
   .tool-options {
     border-bottom: 1px solid #272727;
-    border-top: 1px solid #5f5f5f;
-    width: calc(100vw - #{$utilities-panel-width});
+    border-top:    1px solid #5f5f5f;
+    margin-top:    1px;
+    width:         calc(100vw - #{$utilities-panel-width} - #{$toolbar-panel-width});
+    position:      absolute;
+    left:          $toolbar-panel-width + 1;
+    z-index:       1;
     
     label {
       margin-right: 10px;
@@ -88,7 +92,7 @@ export default {
     
     .input-container {
       display: inline-block;
-      padding: 5px 10px;
+      padding: 8px 10px;
     }
 
     .object-opacity input[type="number"] {
