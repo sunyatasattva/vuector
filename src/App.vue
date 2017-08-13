@@ -62,6 +62,7 @@ import ImportButton from './components/ImportButton.vue';
 import LayersPanel from './components/LayersPanel.vue';
 import ObjectInspector from './components/ObjectInspector.vue';
 import Toolbar from './components/Toolbar.vue';
+import Vue from 'vue';
 
 export default {
   name: 'app',
@@ -87,6 +88,9 @@ export default {
         return this.canvas.objects.find((obj) => {
           return obj._uid === this.activeObjectId
         });
+      },
+      isDrawingMode() {
+        return this.selectedTool.type === 'brush';
       }
     },
     mapGetters([
@@ -102,6 +106,16 @@ export default {
       isMounted: false
     }
   },
+  watch: {
+    isDrawingMode(val) {
+      Vue.set(this.canvas, 'isDrawingMode', val);
+      
+      if(val) {
+        // @todo probably this should belong to vue-fabric
+        this.setDrawingBrushProps(this.selectedTool.options);
+      }
+    }
+  },
   methods: {
     // Check that object is not 0 width/height, also reset originX/Y for consistency
     addObjectEnd() {
@@ -111,7 +125,7 @@ export default {
     addObject(opts) {
       const tool = this.selectedTool.type;
       
-      if(tool === 'pointer')
+      if(tool === 'pointer' || tool === 'brush')
         return;
       else {
         let newObject = Tools[tool].initializeObject(
@@ -169,6 +183,14 @@ export default {
       link.click();
       
       document.body.removeChild(link);
+    },
+    setDrawingBrushProps(props) {
+      let drawingBrush = this.$refs.canvas.$canvas.freeDrawingBrush;
+      
+      this.$refs.canvas.$canvas.freeDrawingBrush = Object.assign(
+        drawingBrush,
+        props
+      );
     },
     syncCanvas(canvas) {
       this.$store.commit('SYNC_CANVAS', canvas);

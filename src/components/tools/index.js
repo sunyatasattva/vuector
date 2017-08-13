@@ -1,3 +1,4 @@
+export { default as brush } from './Brush.vue';
 export { default as ellipse } from './Ellipse.vue';
 export { default as image } from './Image.vue';
 export { default as pointer } from './Pointer.vue';
