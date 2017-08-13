@@ -154,7 +154,9 @@ export default {
       }
     },
     objectAdded(opts) {
-      if(!this.isAddingObject || opts.target._uid === this.activeObjectId)
+      if(!this.isAddingObject 
+         || this.selectedTool === 'brush'
+         || opts.target._uid === this.activeObjectId)
         return;
       else
         this.$store.commit('SELECT_OBJECT', opts.target);
