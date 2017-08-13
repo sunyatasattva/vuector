@@ -6,9 +6,9 @@
       :name="inputName"
       :step="step"
       :value="value"
-      @input="adjustValue($event.target.value)">
+      @input="adjustValue($event.target.value)"
+      @change="change">
   </div>
-  
 </template>
 
 <script>
@@ -45,10 +45,13 @@ export default {
     }
   },
   methods: {
-    adjustValue: function(val) {
+    adjustValue(val) {
       let newVal = !isNaN(val) ? val : this.value + -val.movementY * this.step;
       
       this.$emit('input', Number(newVal));
+    },
+    change(e) {
+      this.$emit('change', e);
     },
     dragStart() {
       this.isDragging = true;
