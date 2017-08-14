@@ -32,7 +32,7 @@
     <fabric-canvas
       tabindex=0
       ref="canvas"
-      v-model="canvas"
+      :value="canvas"
       :activeObjectId="activeObjectId"
       :height=400
       backgroundColor="#fff"
