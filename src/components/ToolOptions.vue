@@ -4,7 +4,7 @@
       <span v-if="tool.options.fileName">
         <strong>Filename: </strong>
         {{ tool.options.fileName }}
-        ({{ tool.options.width }} &times; {{ tool.options.height }})
+        ({{ tool.options.width }}px &times; {{ tool.options.height }}px)
       </span>
       <span v-else>
         Select an image from your computer&hellip;
@@ -87,7 +87,7 @@ export default {
     }
     
     .file-details {
-      padding: 10px;
+      padding: 12px 10px;
     }
     
     .input-container {

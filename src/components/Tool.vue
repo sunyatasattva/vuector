@@ -22,7 +22,7 @@ export default {
           angle: 0,
           fill: '#ffffff',
           opacity: 1
-        }, this.opts)
+        }, this.opts);
       }
     },
     mapGetters([
@@ -31,6 +31,12 @@ export default {
   ),
   methods: {
     selectTool() {
+      this.$store.commit('SELECT_TOOL', this);
+    }
+  },
+  watch: {
+    options() {
+      // @fixme that's a bit of a hack (*´･Д･)
       this.$store.commit('SELECT_TOOL', this);
     }
   },

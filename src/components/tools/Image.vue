@@ -1,5 +1,5 @@
 <template>
-  <tool type="image" title="Import Image..." :opts="$data">
+  <tool type="image" title="Import Image..." :opts="opts">
     <label for="image-file">
       <icon name="file-image" />
       <input id="image-file" type="file" @change="fileSelect">
@@ -15,6 +15,22 @@ export default {
   name: 'tool-image',
   components: {
     Tool
+  },
+  computed: {
+    opts() {
+      return Object.assign(
+        {},
+        {
+          fileName: this.fileName,
+          fill: this.fill,
+          height: this.height,
+          originX: this.originX,
+          originY: this.originY,
+          src: this.src,
+          width: this.width
+        }
+      );
+    }
   },
   data() {
     return {
@@ -33,13 +49,12 @@ export default {
       const file = e.target.files[0];
       const dataURL = reader.readAsDataURL(file);
 
-      this.fileName = file.name;
-      
       reader.onload = (e) => {
         let img = new Image();
         img.src = e.target.result;
         
         img.onload = () => {
+          this.fileName = file.name;
           this.src = img.src;
           this.width = img.width;
           this.height = img.height;
