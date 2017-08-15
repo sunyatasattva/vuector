@@ -4,7 +4,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import VueFabric from '../node_modules/vue-fabric/src/main.js'
+import VueFabric from 'vue-fabric'
 import VueSVGIcon from 'vue-svgicon'
   
 Vue.use(VueFabric);

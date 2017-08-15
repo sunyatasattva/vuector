@@ -46,6 +46,6 @@ export default {
   
   .button-options {
     top:     30px;
-    z-index: 1;
+    z-index: 2;
   }
 </style>

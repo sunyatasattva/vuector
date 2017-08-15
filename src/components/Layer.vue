@@ -110,7 +110,6 @@ export default {
   }
   
   .layer-selectable {
-    
     + label {
       @extend %raised-button;
       

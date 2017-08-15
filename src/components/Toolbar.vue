@@ -5,6 +5,7 @@
     <tool-rectangle />
     <tool-triangle />
     <tool-ellipse />
+    <tool-line />
     <tool-text />
     <tool-image />
   </div>
@@ -21,6 +22,7 @@ export default {
     'tool-brush': Tools.brush,
     'tool-ellipse': Tools.ellipse,
     'tool-image': Tools.image,
+    'tool-line': Tools.line,
     'tool-pointer': Tools.pointer,
     'tool-rectangle': Tools.rect,
     'tool-text': Tools.textbox,

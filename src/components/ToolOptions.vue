@@ -21,6 +21,10 @@
       <div class="input-container input-color" v-if="tool.options.fill">
         <input type="color" id="options-fill" name="options-fill" v-model='tool.options.fill' />
       </div>
+      
+      <div class="input-container input-color" v-if="tool.options.stroke">
+        <input type="color" id="options-stroke" name="options-stroke" v-model='tool.options.stroke' />
+      </div>
 
       <draggable-number-input
         :min="0"
