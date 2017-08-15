@@ -21,6 +21,7 @@ export default {
         return Object.assign({
           angle: 0,
           fill: '#ffffff',
+          name: this.type,
           opacity: 1
         }, this.opts);
       }

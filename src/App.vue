@@ -35,6 +35,7 @@
       :value="canvas"
       :activeObjectId="activeObjectId"
       :height=400
+      :serialize="propsToSerialize"
       backgroundColor="#fff"
       @keyup.delete="deleteActiveObject"
       @objectAdded="objectAdded"
@@ -106,7 +107,9 @@ export default {
   ),
   data() {
     return {
-      isMounted: false
+      propsToSerialize: [
+        'name'
+      ]
     }
   },
   watch: {
@@ -205,9 +208,6 @@ export default {
     setAddingObject(val) {
       this.$store.commit('SET_ADDING_OBJECT', val);
     }
-  },
-  mounted() {
-    this.isMounted = true;
   }
 }
 </script>

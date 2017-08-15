@@ -10,7 +10,11 @@
       <icon v-if="object.visible" name="eye" />
       <icon v-else name="eye-off" />
     </label>
-    {{object.type}}
+    
+    <editable-span :value="object.name" @update="updateName">
+      {{ object.name || object.type }}
+    </editable-span>
+
     <button class="delete-object" title="Delete layer" @click="deleteObject(object)">
       <icon name="delete" />
     </button>
@@ -21,16 +25,29 @@
 import '../icons/delete';
 import '../icons/eye';
 import '../icons/eye-off';
+import EditableSpan from './EditableSpan.vue';
+import Vue from 'vue';
 
 export default {
   name: 'layer',
   props: ['object'],
+  components: {
+    EditableSpan
+  },
   computed: {
     isActive() {
       return this.$store.getters.activeObjectId === this.object._uid;
     }
   },
+  data() {
+    return {
+      isEditing: false
+    }
+  },
   methods: {
+    updateName(name) {
+      Vue.set(this.object, 'name', name);
+    },
     deleteObject(object) {
       this.$store.commit('DELETE_OBJECT', object);
     },
