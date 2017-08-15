@@ -11,6 +11,16 @@
       <icon v-else name="eye-off" />
     </label>
     
+    <input 
+      type="checkbox"
+      class="layer-selectable"
+      :id="`layer-${object._uid}-selectable`"
+      v-model="object.selectable"
+    />
+    <label :for="`layer-${object._uid}-selectable`" title="Lock layer in place">
+      <icon name="lock" />
+    </label>
+    
     <editable-span :value="object.name" @update="updateName">
       {{ object.name || object.type }}
     </editable-span>
@@ -25,6 +35,7 @@
 import '../icons/delete';
 import '../icons/eye';
 import '../icons/eye-off';
+import '../icons/lock';
 import EditableSpan from './EditableSpan.vue';
 import Vue from 'vue';
 
@@ -96,6 +107,26 @@ export default {
   
   .layer.active {
     background-color: #586677;
+  }
+  
+  .layer-selectable {
+    
+    + label {
+      @extend %raised-button;
+      
+      border-color: transparent;
+      background-color: transparent;
+      box-shadow: none;
+      display:      inline-block;
+      margin-right: 10px;
+    }
+    
+    &:not(:checked) + label {
+      border-top: 1px solid #424242;
+      box-shadow: 0px 0px 0px 1px #333,
+        inset 0px 0px 4px #333;
+      color:      #d6d6d6;
+    }
   }
   
   .layer-visible {
